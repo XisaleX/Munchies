@@ -31,6 +31,29 @@
   <div id="map"></div>
 <% end %>
 
+<div class="row col-10 offset-1">
+  <% @place.pics.each do |pic| %>
+    <div class="col-12 col-sm-6">
+      <%= image_tag pic.picture %>
+    <%= pic.caption %>
+    </div>
+  <% end %>
+</div>
+
+
+<div class="row col-10 offset-1">
+  <% @place.comments.each do |comment| %>
+    <div class="col-12 col-sm-6">
+      <blockquote>
+        <% if comment.humanized_rating.present? %>
+          <b><%= comment.humanized_rating %></b> -
+        <% end %>
+        <%= comment.message %>
+        <small><%= comment.user.email %></small>
+      </blockquote>
+    </div>
+  <% end %>
+</div>
 
 <br />
 
@@ -82,21 +105,16 @@
   </button>
 </div>
 
+<div class="clear">
+  <%= simple_form_for @pic, url: place_pics_path(@place) do |f| %>
+    <%= f.input :picture %>
+    <%= f.input :caption %>
+    <%= f.submit "Add a Picture", class: "btn btn-primary" %>
+  <% end %>
+</div>
+
 
 <div class="clear"></div>
 
 
 
-<div class="row col-10 offset-1">
-  <% @place.comments.each do |comment| %>
-    <div class="col-12 col-sm-6">
-      <blockquote>
-        <% if comment.humanized_rating.present? %>
-          <b><%= comment.humanized_rating %></b> -
-        <% end %>
-        <%= comment.message %>
-        <small><%= comment.user.email %></small>
-      </blockquote>
-    </div>
-  <% end %>
-</div>
